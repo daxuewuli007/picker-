@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	
+	<style>
+	  *{
+	  	margin: 0;
+	  	padding:0;
+	  }
+	  html,body{
+	  	width: 100%;
+	  	height: 100%;
+	  	font-family: -apple-system, '苹方-简', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+	  }
+	   body {
+            background-color:#f6f6f6;
+        }
+      .top{
+      	width: 100%;
+      	height: 125px;
+      
+      }
+      .top img{
+      	width: 100%;
+        height: 100%;
+      }
+      .content{
+           padding: 18px 0 0 0;
+    /* height: 120.5px; */
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    text-align: center;
+    color: #666666;
+      }
+      .content .instruction{
+      	text-align:left;
+
+      }
+      .instruction{
+      	padding:0 25px;
+      }
+      .phone,.age{
+      	display:inline-block;
+      	margin-top: 24px;
+	    width: 310px;
+	    height: 45px;
+	    box-sizing: border-box;
+	        text-align: center;
+	    line-height: 45px;
+	    border-radius: 5px;
+		background-color: #ffffff;
+		border: solid 1px #f9ccaf;
+		font-size: 16px;
+		outline:none;
+		position: relative;
+		background: url("./img/more_icon.png") no-repeat;
+    background-position: 280px;
+    background-size: 15px 9px;
+      }
+      .phone{
+      	 background-color: #ffffff;
+      }
+      .age{
+      	 background-color: #ffffff;
+      }
+      .phone:focus,.age:focus{
+      	
+         outline:none;
+      	 border: solid 1px #c04a45;
+      }
+      .age{
+      	margin-top: 6px;
+      }
+     
+     .predict{
+	   	display: inline-block;
+      	width: 210px;
+	    height: 45px;
+	    line-height: 45px;
+	    border: 0px;
+	    outline: none;
+	    border-radius: 5px;
+	     background-color: #ff9447;
+	    margin-top: 36px;
+        color:#fff;
+        font-size: 18px;
+        box-shadow: 0px 3px 0px #e7792a;
+      }
+      .picker-left-button{
+      	position: absolute;
+	  left: 0;
+	  box-sizing: border-box;
+	  height: 2.2rem;
+	  line-height: 2.2rem;
+	  color: #04BE02;
+	  z-index: 1;
+	  padding: 0 .5rem;
+      }
+
+    .no_confirm{
+           width: 20px;
+           height: 20px;
+		}
+		.yes_confirm{
+			width: 28px;
+           height: 20px;
+		}
+		.weui-picker__hd{
+          padding: 10px 15px 5px !important;
+		}
+      .div_result{
+	        margin: 70px 15px;
+		    border: 1px solid #f9ccaf;
+		    position: relative;
+		    text-align: center;
+		    color: #333;
+            visibility: hidden;
+            padding: 30px 13px 30px 13px;
+		}
+		.cro_left_top,.cro_right_top,.cro_left_bottom,.cro_right_bottom{
+		position: absolute;
+		width: 8px;
+		height: 8px;
+	/*	border: 1px solid #f6f6f6;*/
+		z-index: 1;
+		background: #f6f6f6;
+		}
+		.cro_left_top{
+		top: -1px;
+		left: -1px;
+		border-radius:0px 0px 8px 0px;
+		border-bottom: 1px solid #f9ccaf;
+		border-right: 1px solid #f9ccaf;
+		}
+		.cro_right_top{
+		top: -1px;
+		right: -1px;
+		border-radius:0px 0px 0px 8px;
+		border-bottom: 1px solid #f9ccaf;
+		border-left: 1px solid #f9ccaf;
+		}
+		.cro_left_bottom{
+		left: -1px;
+		bottom: -1px;
+		border-radius:0px 8px 0px 0px;
+		border-top: 1px solid #f9ccaf;
+		border-right: 1px solid #f9ccaf;
+		}
+		.cro_right_bottom{
+		right: -1px;
+		bottom: -1px;
+		border-radius:8px 0px 0px 0px;
+		border-top: 1px solid #f9ccaf;
+		border-left: 1px solid #f9ccaf;
+		}
+		/*.weui-picker__action img{
+           width: 20px;
+           height: 20px;
+		}*/
+			/*.weui-picker{
+			bottom:-114px !important;
+		}
+		.weui-picker__group{
+			        top: -62px;
+		}*/
+		.wnlBanner {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 64px;
+	background-color: rgba(255, 255, 255, 0.95);
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	z-index: 900;
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+.closeBanner {
+	position: absolute;
+	display: block;
+	left: 0;
+	top: 50%;
+	width: 30px;
+	height: 30px;
+	margin-top: -15px;
+	background: url("./img/ad-close-icon@3x.png") center no-repeat;
+	background-size: 10px 10px;
+}
+.wnllogo {
+	position: absolute;
+	left: 30px;
+	top: 10px;
+	width: 44px;
+	height: 44px;
+	background: url("./img/ad-logo-icon.png") no-repeat;
+	background-size: 44px 44px;
+}
+.ad-title {
+	display: inline-block;
+	margin-top: 14px;
+	margin-left: 84px;
+}
+.ad-title .ad-t1 {
+	font-size: 14px;
+	color: #111111;
+	line-height: 18px;
+	text-align: left;
+}
+.ad-title .ad-t2 {
+	margin-top: 1px;
+	font-size: 12px;
+	color: #333333;
+	line-height: 18px;
+	text-align: left;
+}
+.downloadBtn {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	margin-top: -13px;
+	display: block;
+	border: 1px solid #2ea9df;
+	border-radius: 3px;
+	width: 68px;
+	height: 24px;
+	font-size: 14px;
+	color: #2ea9df;
+	line-height: 24px;
+	text-align: center;
+	text-decoration: none;
+}
+	</style>
+    <link rel="stylesheet" href="./css/weui.css">
+	<title>生男生女</title>
+</head>
+<body>
+	<div class='top'><img src="./img/boy-girl-pic@2x.jpg" alt=""></div>
+	<div class='content'>
+	    <p class='instruction'>想预测一下，你们会生个男宝宝或是女宝宝吗?以下是根据清宫珍藏的生男生女预测表做成的应用，女性年龄是以农历虚龄(即真实年龄加1岁)算，而怀孕月份既是受孕那个月份，当然亦是以农历算。大家不妨参考一下。</p>
+       <!--  <input class="phone" readonly="readonly" id="phone" type="text" placeholder="怀孕月份(农历)"> -->
+        <div  class="phone" id="phone" style="color: #999999;">怀孕月份(农历)</div>
+    <!--     <input class="age" readonly="readonly"  id='age' type="text" placeholder="年龄(虚岁)"> -->
+        <div class="age" id='age' style="color: #999999;">年龄(虚岁)</div>
+        <!-- <input class="predict" type="button" value="开始预测"/> -->
+
+        <div class="predict" id="predict">开始预测</div>
+        <div class="div_result">
+					<div class="cro_left_top"></div>
+					<div class="cro_right_top"></div>
+					<div class="cro_left_bottom"></div>
+					<div class="cro_right_bottom"></div>
+					 恭喜您，是个可爱的<span class='predict_sex'></span>宝宝！
+        </div>
+	</div>
+	 <div class="wnlBanner">
+				<a class="closeBanner" href="javascript:void(0)"></a>
+				<div class="wnllogo"></div>
+				<div class="ad-title">
+					<div class="ad-t1">万年历</div>
+					<div class="ad-t2">看农历、选日子、测运势</div>
+				</div>
+				<a class="downloadBtn" href="javascript:void(0)">打开APP</a>
+	        </div>
+</body>
+<!-- <script type="text/javascript" src="http://www.jjonline.cn/Public/Js/calendar.js"></script> -->
+<!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
+<script type="text/javascript" src="./jquery.js"></script>
+<script type="text/javascript" src="http://www.51wnl.com/wnl_utils/openapp.js"></script>
+<!-- <script type="text/javascript" src="./js/jquery-weui.min.js"></script> -->
+<script type="text/javascript" src="./js/picker.js"></script>
+<script type="text/javascript" src="./layer.js"></script>
+
+
+<script>
+  $("#age").focus(function(){
+        document.activeElement.blur();
+    }) 
+  $("#phone").focus(function(){
+        document.activeElement.blur();
+    })  
+var sexData=[
+				{"age":18,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":19,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":20,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":21,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"女"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":22,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":23,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"女"}]},{"age":24,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":25,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":26,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":27,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":28,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":29,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"女"},{"month":5,"sex":"男"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":30,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"女"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":31,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":32,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":33,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":34,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":35,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":36,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":37,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":38,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"女"}]},{"age":39,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"女"}]},{"age":40,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"女"}]},{"age":41,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"男"},{"month":11,"sex":"女"},{"month":12,"sex":"男"}]},{"age":42,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"女"},{"month":6,"sex":"男"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"女"}]},{"age":43,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"女"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"男"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]},{"age":44,"data":[{"month":1,"sex":"男"},{"month":2,"sex":"男"},{"month":3,"sex":"女"},{"month":4,"sex":"男"},{"month":5,"sex":"男"},{"month":6,"sex":"男"},{"month":7,"sex":"女"},{"month":8,"sex":"男"},{"month":9,"sex":"女"},{"month":10,"sex":"男"},{"month":11,"sex":"男"},{"month":12,"sex":"女"}]},{"age":45,"data":[{"month":1,"sex":"女"},{"month":2,"sex":"男"},{"month":3,"sex":"男"},{"month":4,"sex":"女"},{"month":5,"sex":"女"},{"month":6,"sex":"女"},{"month":7,"sex":"男"},{"month":8,"sex":"女"},{"month":9,"sex":"男"},{"month":10,"sex":"女"},{"month":11,"sex":"男"},{"month":12,"sex":"男"}]}
+			];
+var arr=['一月份','二月份','三月份','四月份','五月份','六月份','七月份','八月份','九月份','十月份','十一月份','十二月份',];
+var arr_age=['18岁','19岁','20岁','21岁','22岁','23岁','24岁','25岁','26岁','27岁','28岁','29岁','30岁','31岁','32岁','33岁','34岁','35岁','36岁','37岁','38岁','39岁','40岁','41岁','42岁','43岁','44岁','45岁'];
+var chkgrade={
+	old:0,
+	month:0
+};
+ var date=new Date;
+ var year=date.getFullYear(); 
+ var month=date.getMonth()+1;
+
+$('#phone').on('click', function () {  
+        // weui.picker([{  
+	       //      label: '一月份',  
+	       //      value: 1
+	       //  }, {  
+	       //      label: '二月份',  
+	       //      value: 2 
+	       //  }, {  
+	       //      label: '三月份',  
+	       //      value: 3
+	       //  },{  
+	       //      label: '四月份',             
+	       //      value: 4  
+	       //  },
+	       //   {  
+	       //      label: '五月份',  
+	       //      value: 5  
+	       //  },
+	       //   {  
+	       //      label: '六月份',  
+	       //      value: 6 
+	       //  }, {  
+	       //      label: '七月份',  
+	       //      value: 7  
+	       //  }, {  
+	       //      label: '八月份',  
+	       //      value: 8  
+	       //  }, {  
+	       //      label: '九月份',  
+	       //      value: 9  
+	       //  }, {  
+	       //      label: '十月份',  
+	       //      value: 10 
+	       //  }, {  
+	       //      label: '十一月份',  
+	       //      value: 11 
+	       //  },{  
+	       //      label: '十二月份',  
+	       //      value: 12  
+	       //  }],  {
+	       //  	defaultValue: [month],
+        //     onChange: function (result) {  
+        //         //console.log(result);
+        //     },  
+        //     onConfirm: function (result) {  
+        //     	defaultValue=result;
+        //     	chkgrade.month=result[0];
+        //     	// console.log(chkgrade.month);
+        //     	$('#phone').removeAttr("style");
+        //         $("#phone").text(arr[result-1]);
+        //         return result;  
+        //     },
+        //     id: 'first_h'    
+        // }); 
+		var picker_h=weui.datePicker({
+		    start: 1979,
+		    end: 2000,
+		    defaultValue: [1991,6,9],
+		    onChange: function(result){
+		         console.log(result);
+		    },
+		    onConfirm: function(result){
+		        console.log(result);
+		    },
+		    id: 'datePicker'
+		}); 
+		// $('body').on("click",".fu_confirm",function(){
+        //    	$(picker_h.first).find(".weui-picker__group").eq(0).find(".weui-picker__content .weui-picker__item").eq(0).text(1234);      	
+        //       });
+
+        //console.log(picker_h,picker_h.first);
+        //      picker_h.find('.weui-picker__group').eq(1).scroll({
+	    //         items: items,
+	    //         temp: lineTemp[level],
+	    //         onChange: function onChange(item, index) {
+	    //             //为当前的result赋值。
+	    //             if (item) {
+	    //                 result[level] = item.value;
+	    //             } else {
+	    //                 result[level] = null;
+	    //             }
+	    //             lineTemp[level] = index;
+
+	    //             if (isMulti) {
+	    //                 defaults.onChange(result);
+	    //             } else {
+	    //                 *
+	    //                  * @子列表处理
+	    //                  * 1. 在没有子列表，或者值列表的数组长度为0时，隐藏掉子列表。
+	    //                  * 2. 滑动之后发现重新有子列表时，再次显示子列表。
+	    //                  *
+	    //                  * @回调处理
+	    //                  * 1. 因为滑动实际上是一层一层传递的：父列表滚动完成之后，会call子列表的onChange，从而带动子列表的滑动。
+	    //                  * 2. 所以，使用者的传进来onChange回调应该在最后一个子列表滑动时再call
+	                     
+	    //                 if (item.children && item.children.length > 0) {
+	    //                     $picker.find('.weui-picker__group').eq(level + 1).show();
+	    //                     !isMulti && scroll(item.children, level + 1); // 不是多列的情况下才继续处理children
+	    //                 } else {
+	    //                     //如果子列表test不通过，子孙列表都隐藏。
+	    //                     var $items = $picker.find('.weui-picker__group');
+	    //                     $items.forEach(function (ele, index) {
+	    //                         if (index > level) {
+	    //                             (0, _util2.default)(ele).hide();
+	    //                         }
+	    //                     });
+
+	    //                     result.splice(level + 1);
+
+	    //                     defaults.onChange(result);
+	    //                 }
+	    //             }
+	    //         },
+	    //         onConfirm: defaults.onConfirm
+	    //     });
+	    // }
+
+
+
+
+});  
+$('#age').on('click', function () {  
+        weui.picker([
+					{label:'39岁',value:39,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'40岁',value:40,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'41岁',value:41,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'42岁',value:42,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'43岁',value:43,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'44岁',value:44,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]},
+					{label:'45岁',value:45,children:[{label:'1',value:1},{label:"2",value:2},{label:'3',value:3}]}],  {
+						defaultValue: [1],
+		            onChange: function (result) {  
+		                //console.log(result);
+		            },  
+		            onConfirm: function (result) {  
+		            	defaultValue=result;
+		            	chkgrade.old=result[0];
+		            	// console.log(chkgrade.old);
+		            	$('#age').removeAttr("style");
+		                $("#age").text(arr_age[result-18]);
+		                return result;  
+		            },
+		            id: 'second_h'    
+            });  
+    });  
+$(".predict").click(function(){
+	if(chkgrade.month==0 || chkgrade.old==0){
+		if(chkgrade.month==0 && chkgrade.old==0){
+			$("#phone").animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "0px" }, 100);
+			 $("#age").animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "0px" }, 100);
+			  layer.msg('请选择您的怀孕月份及年龄', {
+						  offset: '200px'
+						  
+						}); 
+		}       
+	    if(chkgrade.month==0 && chkgrade.old!=0){
+            $("#phone").animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "0px" }, 100);
+            layer.msg('请选择您的怀孕月份', {
+						  offset: '200px'						  
+						}); 
+	     }
+	     if(chkgrade.month!=0 && chkgrade.old==0){
+	     	 $("#age").animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "-10px" }, 100).animate({left: "10px" }, 100).animate({left: "0px" }, 100);
+                 layer.msg('请选择您的年龄', {
+						  offset: '200px'						  
+						}); 
+	     }
+	}else{
+		        $(".div_result").css("visibility","hidden");
+		        var beiby;
+			    for(var i=0;i<sexData.length;i++){
+			    	
+		        	if(sexData[i].age==chkgrade.old){
+		        		for(var j=0;j<sexData[i].data.length;j++){
+		        			if(sexData[i].data[j].month==chkgrade.month){
+				                if (sexData[i].data[j].sex == '女') {
+				                    beiby='女';
+				                } else {
+				                    beiby='男';
+		                        }
+
+			                }			               
+		                }
+		            }
+		        }
+                // console.log(beiby);
+                $(".predict_sex").text(beiby);
+                 $(".div_result").css("visibility","visible");
+    	        $(".content").css("padding-bottom","15px");
+	}
+});
+var obj= document.getElementById("predict");
+obj.addEventListener('touchstart',function(){
+       	$("#predict").css("opacity","0.6");
+}, false);  
+       
+obj.addEventListener('touchend',function(){
+        $("#predict").css("opacity","1");
+}, false); 
+
+$(function () {        	
+    	var ua=navigator.userAgent.toLowerCase();         
+	    var wnl=ua.indexOf("wnl")>-1;			   
+	    if (!wnl){
+	        $(".wnlBanner").show();
+	    }
+})      
+        
+
+</script>
+ <script type="text/javascript">
+            $(function () {
+               $('.closeBanner').click(function () {
+					$('.wnlBanner').hide();
+					$('.btn_mask').css('bottom', '0');
+					$('.section').css('margin-bottom', '0');
+					$('.index_setion').css('margin-bottom', '65px');
+	           });
+				$('.downloadBtn').click(function () {
+					loadSchema('maintab?index=1');
+				});
+            });
+    </script>
+    <script>
+
+
+   var demo=[1990,11,16];
+   var transt=calendar.lunar2solar(1990,11,16);
+   var weekend=calendar.solar2lunar(transt.cMonth+1 > 12 ? transt.cYear+1 : transt.cYear,transt.cMonth+1 > 12? 1 : transt.cMonth+1,transt.cDay);
+   console.log(demo,transt,weekend);
+
+// ssh=(function (year, lastyear) {
+// 		var lunarObj = calendar.solar2lunar(year, 1, 1);
+// 		var lunarlastObj = calendar.solar2lunar(lastyear, 12, 31);
+// 		var yearList = [];0
+// 		for (var k = lunarObj.lYear; k <= lunarlastObj.lYear; k++) {
+// 			// if (lunarObj.lYear === k) {
+// 			// 	yearToView = k - this.minLDate[0];
+// 			// }
+// 			var leapMonth = calendar.leapMonth(k);
+// 			var monthList = [],
+// 				monthToView = 0,
+// 				monthCount = 11;
+// 			if (leapMonth > 0) {
+// 				monthCount++;
+// 			}
+
+// 			for (var i = 0; i <= monthCount; i++) {
+			
+// 				var dayList = [],		
+// 				    solarObj = {};
+// 				var dayCount;
+// 				if (leapMonth > 0) {
+// 					if (i < leapMonth) {
+// 						dayCount=calendar.monthDays(k, i);
+// 						for (var j = 1; j <= dayCount; j++) {
+// 							// if (lunarObj.lDay === j) {
+// 							// 	dayToView = j - 1;
+// 							// }
+// 							solarObj = calendar.lunar2solar(k, i+1, j, false);								
+// 							dayList.push({
+// 								label:calendar.toChinaDay(i) + '周' + calendar.nStr1[solarObj.nWeek],
+// 								value:solarObj.cDay
+// 							});			
+// 			            }
+// 			             monthList.push({
+// 			                label: calendar.toChinaMonth(i + 1),
+// 			                value: solarObj.cMonth,
+// 			                children: dayList
+// 		                });
+// 					}
+// 					else if (i === leapMonth) {
+// 						dayCount= calendar.leapDays(k);
+
+// 						for (var j = 1; j <= dayCount; j++) {
+// 							// if (lunarObj.lDay === j) {
+// 							// 	dayToView = j - 1;
+// 							// }
+// 							solarObj = calendar.lunar2solar(k, i, j, true);								
+// 							dayList.push({
+// 								label:calendar.toChinaDay(i) + '周' + calendar.nStr1[solarObj.nWeek],
+// 								value:solarObj.cDay
+// 							});			
+// 			            }
+// 			             monthList.push({
+// 			                label: monthList.push('闰' + calendar.toChinaMonth(i)),
+// 			                value: solarObj.cMonth,
+// 			                children: dayList
+// 		                });
+
+// 					}
+// 					else {
+// 						dayCount=calendar.monthDays(k, i);
+
+// 						for (var j = 1; j <= dayCount; j++) {
+// 							// if (lunarObj.lDay === j) {
+// 							// 	dayToView = j - 1;
+// 							// }
+// 							solarObj = calendar.lunar2solar(k, i, j, false);								
+// 							dayList.push({
+// 								label:calendar.toChinaDay(i) + '周' + calendar.nStr1[solarObj.nWeek],
+// 								value:solarObj.cDay
+// 							});			
+// 			            }
+// 			             monthList.push({
+// 			                label: monthList.push(calendar.toChinaMonth(i)),
+// 			                value: solarObj.cMonth,
+// 			                children: dayList
+// 		                });
+// 					}
+// 				}
+// 				else {
+// 					dayCount=calendar.monthDays(k, i+1);
+// 					for (var j = 1; j <= dayCount; j++) {
+// 							// if (lunarObj.lDay === j) {
+// 							// 	dayToView = j - 1;
+// 							// }
+// 							solarObj = calendar.lunar2solar(k, i+1, j, false);								
+// 							dayList.push({
+// 								label:calendar.toChinaDay(i) + '周' + calendar.nStr1[solarObj.nWeek],
+// 								value:solarObj.cDay
+// 							});			
+// 			            }
+// 			             monthList.push({
+// 			                label: monthList.push(calendar.toChinaMonth(i+1)),
+// 			                value: solarObj.cMonth,
+// 			                children: dayList
+// 		                });
+// 				}
+
+// 			}
+// 		yearList.push({
+//             label: k + '年',
+//             value: solarObj.cYear,
+//             children: monthList
+//         });
+// 	}
+// 	return yearList;
+// })(defaults.start,defaults.end)	
+
+
+
+
+
+
+
+
+
+
+    </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
